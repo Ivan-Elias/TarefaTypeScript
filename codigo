@@ -1,0 +1,69 @@
+class veiculo {
+  id: number;
+  placa: string;
+  combustivel: string;
+}
+
+class pedidocombustível{
+  id: number;
+  veiculoid: number;
+  valor: number;
+
+}
+
+class controlepedidocombustível {
+  private veiculo: veiculo[];
+  private pedidocombustivel: pedidocombustível[];
+  getVehicleById: any;
+
+  constructor() {
+    this.veiculo = [];
+    this.pedidocombustivel = [];
+  }
+
+  addVehicle(veiculo: veiculo) {
+    this.veiculo.push(veiculo);
+  }
+
+  emitordem(veiculoid: number, valor: number) {
+    if (valor <= 0) {
+      console.log("A quantidade de combustível deve ser maior que zero.");
+      return;
+    }
+
+    const pedidocombustível: pedidocombustível = {
+      id: this.pedidocombustivel.length + 1,
+      veiculoid: veiculoid,
+      valor: valor,
+    };
+
+    this.pedidocombustivel.push(pedidocombustível);
+
+    console.log("Ordem de combustível emitida com sucesso.");
+  }
+
+  getAllOrdens() {
+    return this.pedidocombustivel;
+  }
+
+  getordensoaraveiculo(veiculoid: number) {
+    return this.pedidocombustivel.filter((order) => order.veiculoid === veiculoid);
+  }
+}
+
+const controle = new controlepedidocombustível();
+
+controle.addVehicle({ id: 1, placa: "ABC1234", combustivel: "Gasolina" });
+controle.addVehicle({ id: 2, placa: "XYZ9876", combustivel: "Diesel" });
+
+controle.emitordem(1, 50);
+controle.emitordem(2, 30);
+controle.emitordem(1, 0); 
+
+const todospedidoscombustível = controle.getAllOrdens();
+console.log("Todas as ordens de combustível:");
+console.log(todospedidoscombustível);
+
+const pedidoscombustívelveículo = controle.getordensoaraveiculo(1);
+console.log("Ordens de combustível para o veículo 1:");
+console.log(pedidoscombustívelveículo);
